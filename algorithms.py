@@ -3,69 +3,73 @@ from data_store import MOCK_WEB
 
 def bfs(start_node):
     """Breadth-First Search: Level-order exploration."""
-    visited = []
+    # Optimization: Use a set for O(1) lookup speed
+    visited = set()
     frontier = collections.deque([start_node])
     
     while frontier:
-        # Yield current state to UI
-        yield list(frontier), visited, f"Current Frontier: {list(frontier)}"
+        yield list(frontier), list(visited), f"Current Frontier: {list(frontier)}"
         
         current = frontier.popleft()
         
         if current not in visited:
-            visited.append(current)
-            yield list(frontier), visited, f"Visiting: {current}"
+            visited.add(current)
+            yield list(frontier), list(visited), f"Visiting: {current}"
             
-            # Get neighbors from data_store
             neighbors = MOCK_WEB.get(current, {}).get("links", [])
             for neighbor in neighbors:
+                # Efficiency: Check both visited and frontier to avoid duplicates
                 if neighbor not in visited and neighbor not in frontier:
                     frontier.append(neighbor)
             
-            yield list(frontier), visited, f"Found {len(neighbors)} links on {current}"
+            yield list(frontier), list(visited), f"Found {len(neighbors)} links on {current}"
 
 def dfs(start_node):
-    """Depth-First Search: Goes deep into one path first."""
-    visited = []
-    frontier = [start_node] # Using a list as a Stack (LIFO)
+    """Depth-First Search: Path-first exploration."""
+    visited = set()
+    frontier = [start_node] 
     
     while frontier:
-        yield frontier, visited, f"Current Stack: {frontier}"
+        yield frontier, list(visited), f"Current Stack: {frontier}"
         
         current = frontier.pop()
         
         if current not in visited:
-            visited.append(current)
-            yield frontier, visited, f"Visiting: {current}"
+            visited.add(current)
+            yield frontier, list(visited), f"Visiting: {current}"
             
             neighbors = MOCK_WEB.get(current, {}).get("links", [])
-            # Reverse neighbors to maintain order when popping from stack
             for neighbor in reversed(neighbors):
-                if neighbor not in visited:
+                # FIX: Added 'neighbor not in frontier' to prevent redundant processing
+                if neighbor not in visited and neighbor not in frontier:
                     frontier.append(neighbor)
             
-            yield frontier, visited, f"Following deep path from {current}..."
+            yield frontier, list(visited), f"Following deep path from {current}..."
 
 def dls(start_node, limit):
-    """Depth-Limited Search: DFS but stops at a specific depth."""
-    visited = []
-    # Frontier stores (node, depth) tuples
+    """
+    Practical Depth-Limited Search: 
+    Includes cycle prevention (visited set) for web safety.
+    """
+    visited = set()
+    # Stores (node, depth)
     frontier = [(start_node, 0)]
     
     while frontier:
-        yield [node for node, depth in frontier], visited, f"Current Frontier (with depths): {frontier}"
+        current_frontier_nodes = [node for node, depth in frontier]
+        yield current_frontier_nodes, list(visited), f"Frontier (Nodes & Depths): {frontier}"
         
         current, depth = frontier.pop()
         
         if current not in visited:
-            visited.append(current)
-            yield [node for node, depth in frontier], visited, f"Visiting {current} at depth {depth}"
+            visited.add(current)
+            yield current_frontier_nodes, list(visited), f"Visiting {current} at depth {depth}"
             
             if depth < limit:
                 neighbors = MOCK_WEB.get(current, {}).get("links", [])
                 for neighbor in reversed(neighbors):
                     if neighbor not in visited:
                         frontier.append((neighbor, depth + 1))
-                yield [node for node, depth in frontier], visited, f"Adding neighbors of {current} (Depth {depth+1})"
+                yield current_frontier_nodes, list(visited), f"Expanding links at depth {depth + 1}"
             else:
-                yield [node for node, depth in frontier], visited, f"Depth limit reached at {current}. Backtracking..."
+                yield current_frontier_nodes, list(visited), f"Depth limit ({limit}) reached at {current}."
