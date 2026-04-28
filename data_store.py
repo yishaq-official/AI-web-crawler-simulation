@@ -1,47 +1,28 @@
 # data_store.py
 
-# Each key is a URL/Page Name
-# 'links' are the edges to other nodes
 MOCK_WEB = {
-    "home": {
-        "title": "Welcome Home",
-        "content": "Landing page of the simulation.",
-        "links": ["facebook", "google", "blog"]
+    "https://www.cyberspace.com": {
+        "title": "Main Frame",
+        "links": ["https://www.cyberspace.com/network", "https://social.meta.com", "https://dev.blog.io"]
     },
-    "facebook": {
-        "title": "Error",
-        "h1": "Sorry, something went wrong.",
-        "links": ["help", "home"]
+    "https://social.meta.com": {
+        "title": "Social Gateway",
+        "links": ["https://social.meta.com/error_404", "https://www.cyberspace.com"]
     },
-    "help": {
-        "title": "Help Center",
-        "content": "FAQs and support documentation.",
-        "links": ["home"]
+    "https://social.meta.com/error_404": {
+        "title": "Access Denied",
+        "links": ["https://social.meta.com/help", "https://www.cyberspace.com"]
     },
-    "google": {
-        "title": "Search",
-        "content": "World's information at your fingertips.",
-        "links": ["gmail", "maps", "target_page"]
+    "https://social.meta.com/help": {
+        "title": "Support Terminal",
+        "links": ["https://www.cyberspace.com"]
     },
-    "gmail": {
-        "title": "Inbox",
-        "links": ["google"]
+    "https://dev.blog.io": {
+        "title": "Dev Logs",
+        "links": ["https://dev.blog.io/search_algos", "https://www.cyberspace.com"]
     },
-    "maps": {
-        "title": "World Map",
-        "links": ["google"]
-    },
-    "blog": {
-        "title": "Tech Insights",
-        "links": ["home", "post_1"]
-    },
-    "post_1": {
-        "title": "Search Algorithms 101",
-        "links": ["blog", "target_page"]
-    },
-    "target_page": {
-        "title": "Hidden Manuscript",
-        "content": "You found the target!",
-        "links": []
+    "https://dev.blog.io/search_algos": {
+        "title": "Target Found",
+        "links": [] # The goal node
     }
 }
