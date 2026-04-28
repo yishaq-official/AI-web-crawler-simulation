@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, scrolledtext
 import algorithms
+import datetime
 
 class CrawlerGUI:
     def __init__(self, root):
@@ -104,7 +105,9 @@ class CrawlerGUI:
             self.depth_limit.config(state="disabled")
 
     def log(self, message):
-        self.log_area.insert(tk.END, f"[SYSTEM]: {message}\n")
+        timestamp = datetime.datetime.now().strftime("%H:%M:%S")
+        ip_sim = "192.168.1.101"
+        self.log_area.insert(tk.END, f"[{timestamp}] {ip_sim} >> {message}\n")
         self.log_area.see(tk.END)
 
     def run_step(self, generator):
