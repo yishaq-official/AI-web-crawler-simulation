@@ -70,7 +70,7 @@ class CrawlerGUI:
         self.btn_start = ttk.Button(control_frame, text="EXECUTE", command=self.start_crawl)
         self.btn_start.grid(row=0, column=6, padx=20)
 
-        # --- Main Display Area ---
+        #  Main Display Area 
         main_container = ttk.Frame(self.root)
         main_container.pack(expand=True, fill="both", padx=25, pady=20)
 
