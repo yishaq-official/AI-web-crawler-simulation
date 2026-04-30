@@ -9,12 +9,12 @@ class CrawlerGUI:
         self.root.title("TERMINAL: WEB_CRAWLER_V1.0")
         self.root.geometry("1000x750")
         
-        # --- Hacker Color Palette ---
-        self.bg_black = "#0a0a0a"       # Deep Black
-        self.neon_green = "#00ff41"     # Classic Matrix Green
-        self.dark_green = "#003b00"     # Dim Green for borders
-        self.terminal_bg = "#050505"    # Slightly lighter black
-        self.text_white = "#e0e0e0"     # Muted white for labels
+        # Hacker Color Palette
+        self.bg_black = "#0a0a0a"       
+        self.neon_green = "#00ff41"     
+        self.dark_green = "#003b00"     
+        self.terminal_bg = "#050505"    
+        self.text_white = "#e0e0e0"     
         
         self.root.configure(bg=self.bg_black)
 
