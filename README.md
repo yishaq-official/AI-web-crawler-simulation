@@ -1,5 +1,11 @@
 # Web Crawler Search Algorithm Simulator
 
+
+```
+                   Authors
+1. Yishaq Damtew -------------DBU1601755
+2. Yirgalem Zegeye -----------DBU1601753
+```
 This project is a Python Tkinter desktop application that visualizes how classic AI search algorithms crawl through a simulated web graph. It demonstrates Breadth-First Search, Depth-First Search, and Depth-Limited Search using a mock collection of connected web pages.
 
 The application uses a terminal-style interface to show the crawler's frontier, visited nodes, and step-by-step traversal log.
